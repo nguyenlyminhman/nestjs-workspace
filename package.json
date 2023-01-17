@@ -1,0 +1,11 @@
+{
+    "private": true,
+    "name": "nestjs-workspace",
+    "workspaces": [
+        "prisma"
+    ],
+    "scripts": {},
+    "dependencies": {
+        "concurrently": "^7.6.0"
+    }
+}
