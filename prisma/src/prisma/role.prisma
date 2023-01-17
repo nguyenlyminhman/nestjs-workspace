@@ -1,0 +1,10 @@
+model Role {
+  id   String @id @default(uuid())
+  name String
+  code String @unique
+  is_deleted Boolean @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  created_by String
+  updated_by String
+}
