@@ -1,10 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["multiSchema"]
-
 }
 
 datasource db {
@@ -12,88 +8,102 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Permission {
-  id   String @id @default(uuid())
-  name String
-  code String @unique
-  is_deleted Boolean @default(false)
+model permission {
+  id             String           @id @default(uuid())
+  name           String
+  code           String           @unique
+  is_deleted     Boolean          @default(false)
+  created_at     DateTime         @default(now())
+  updated_at     DateTime         @default(now())
+  created_by     String
+  updated_by     String
+  permission_role permission_role[]
+}
+
+model role {
+  id             String           @id @default(uuid())
+  name           String
+  code           String           @unique
+  is_deleted     Boolean          @default(false)
+  created_at     DateTime         @default(now())
+  updated_at     DateTime         @default(now())
+  created_by     String
+  updated_by     String
+  RolePermission permission_role[]
+}
+
+model permission_role {
+  permission_id String
+  role_id       String
+  is_deleted    Boolean    @default(false)
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @default(now())
+  created_by    String
+  updated_by    String
+  permission   permission @relation(fields: [permission_id], references: [id])
+  role          role       @relation(fields: [role_id], references: [id])
+
+  @@id([permission_id, role_id])
+}
+
+model user {
+  id         Int      @id @default(autoincrement())
+  email      String   @unique
+  name       String?
+  is_deleted Boolean  @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
   created_by String
   updated_by String
+  posts      post[]
+  profile    profile?
 }
 
-
-model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  posts   Post[]
-  profile Profile?
-  is_deleted Boolean @default(false)
+model profile {
+  id         Int      @id @default(autoincrement())
+  bio        String
+  userId     Int      @unique
+  is_deleted Boolean  @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
   created_by String
   updated_by String
+  user       user     @relation(fields: [userId], references: [id])
 }
 
-model Profile {
-  id     Int    @id @default(autoincrement())
-  bio    String
-  user   User   @relation(fields: [userId], references: [id])
-  userId Int    @unique
-  is_deleted Boolean @default(false)
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-  created_by String
-  updated_by String
-}
-
-model Post {
-  id         Int        @id @default(autoincrement())
-  createdAt  DateTime   @default(now())
+model post {
+  id         Int                 @id @default(autoincrement())
+  createdAt  DateTime            @default(now())
   title      String
-  published  Boolean    @default(false)
-  author     User       @relation(fields: [authorId], references: [id])
+  published  Boolean             @default(false)
   authorId   Int
-  categories CategoriesOnPosts[]
-  is_deleted Boolean @default(false)
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+  is_deleted Boolean             @default(false)
+  created_at DateTime            @default(now())
+  updated_at DateTime            @default(now())
   created_by String
   updated_by String
+  categories categories_posts[]
+  author     user                @relation(fields: [authorId], references: [id])
 }
 
-model Category {
-  id    Int    @id @default(autoincrement())
-  name  String
-  posts CategoriesOnPosts[]
-  is_deleted Boolean @default(false)
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+model category {
+  id         Int                 @id @default(autoincrement())
+  name       String
+  is_deleted Boolean             @default(false)
+  created_at DateTime            @default(now())
+  updated_at DateTime            @default(now())
   created_by String
   updated_by String
+  posts      categories_posts[]
 }
 
-model CategoriesOnPosts {
-  post       Post     @relation(fields: [postId], references: [id])
-  postId     Int // relation scalar field (used in the `@relation` attribute above)
-  category   Category @relation(fields: [categoryId], references: [id])
-  categoryId Int // relation scalar field (used in the `@relation` attribute above)
-  assignedAt DateTime @default(now())
-  assignedBy String
+model categories_posts {
+  postId      Int
+  categoryId  Int
+  assigned_at DateTime @default(now())
+  assigned_by String
+  category    category @relation(fields: [categoryId], references: [id])
+  post        post     @relation(fields: [postId], references: [id])
+
   @@id([postId, categoryId])
 }
-
-// enum ERole {
-//   USER
-//   ADMIN
-//   CLIENT
-// }
-
-// enum EPermission {
-//   READ
-//   WRITE
-//   EDIT
-//   DELETE
-// }
