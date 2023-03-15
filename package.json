@@ -7,7 +7,5 @@
         "cqrs-saga"
     ],
     "scripts": {},
-    "dependencies": {
-        "concurrently": "^7.6.0"
-    }
+    "dependencies": {}
 }
