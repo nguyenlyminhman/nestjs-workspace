@@ -8,29 +8,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
-  id         Int      @id @default(autoincrement())
-  email      String   @unique
-  name       String?
-  is_deleted Boolean  @default(false)
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-  created_by String
-  updated_by String
-  order    order?
-}
-
 model order {
   id         Int      @id @default(autoincrement())
   price      String
   phone      String
   address    String
-  userId     Int      @unique
+  status     String
+  status_b    String
   is_deleted Boolean  @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
   created_by String
   updated_by String
-  user       user     @relation(fields: [userId], references: [id])
 }
 
