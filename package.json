@@ -2,7 +2,9 @@
     "private": true,
     "name": "nestjs-workspace",
     "workspaces": [
-        "prisma"
+        "prisma",
+        "tenant-mongodb",
+        "cqrs-saga"
     ],
     "scripts": {},
     "dependencies": {
