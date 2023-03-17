@@ -1,4 +1,4 @@
-import { order as Order } from '@prisma/client';
+import { Order } from '@prisma/client';
 
 import { ApiProperty } from "@nestjs/swagger";
 

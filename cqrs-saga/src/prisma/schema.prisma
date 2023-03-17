@@ -8,9 +8,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model order {
+model Order {
   id    Int    @id @default(autoincrement())
   price String
   status String
 }
 
+model Post {
+  id    Int    @id @default(autoincrement())
+  title String
+  status String
+}

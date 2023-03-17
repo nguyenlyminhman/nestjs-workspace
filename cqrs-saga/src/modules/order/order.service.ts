@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { order as Order, Prisma } from '@prisma/client';
+import { Order, Prisma } from '@prisma/client';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { UpdateOrderStatusDto } from './dtos/update-order-status.dto';
 
@@ -12,7 +12,7 @@ export class OrderService {
     return await this.prisma.order.findMany({});
   }
 
-  async getOne(input: Prisma.orderWhereUniqueInput): Promise<Order | null> {
+  async getOne(input: Prisma.OrderWhereUniqueInput): Promise<Order | null> {
     return await this.prisma.order.findUnique({ where: input });
   }
 
