@@ -9,16 +9,8 @@ datasource db {
 }
 
 model order {
-  id         Int      @id @default(autoincrement())
-  price      String
-  phone      String
-  address    String
-  status     String
-  status_b    String
-  is_deleted Boolean  @default(false)
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-  created_by String
-  updated_by String
+  id    Int    @id @default(autoincrement())
+  price String
+  status String
 }
 
