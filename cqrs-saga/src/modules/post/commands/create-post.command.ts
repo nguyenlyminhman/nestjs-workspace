@@ -4,5 +4,4 @@ export class CreatePostCommand{
     constructor(
         readonly createPostDto: CreatePostDto
     ){}
-
 } 
