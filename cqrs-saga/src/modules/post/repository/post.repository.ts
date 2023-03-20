@@ -24,4 +24,16 @@ export class PostRepository {
       where: { id: id },
     });
   }
+
+  async find(id: number): Promise<PostEntity> {
+    return await this.prismaService.post.findUnique({
+      where: { id: id },
+    });
+  }
+
+  async findAll(): Promise<PostEntity[]> {
+    return await this.prismaService.post.findMany();
+  }
+
+
 }
