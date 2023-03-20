@@ -1,4 +1,4 @@
-import { UpdatePostDto } from "../dtos/update-post.dto";
+import { UpdatePostDto } from "../../dtos/update-post.dto";
 
 export class UpdatePostCommand{
     constructor(

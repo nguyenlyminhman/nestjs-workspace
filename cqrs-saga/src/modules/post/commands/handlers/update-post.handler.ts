@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { PostRepository } from "../../repository/post.repository";
-import { UpdatePostCommand } from "../update-post.command";
+import { UpdatePostCommand } from "../impl";
 
 @CommandHandler(UpdatePostCommand)
 export class UpdatePostHandler implements ICommandHandler<UpdatePostCommand>{

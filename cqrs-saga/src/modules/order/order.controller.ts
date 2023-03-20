@@ -1,13 +1,14 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, Put } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { Order as OrderModel } from '@prisma/client';
-import { ApiFoundResponse } from '@nestjs/swagger';
+import { ApiFoundResponse, ApiTags } from '@nestjs/swagger';
 import { OrderEntity } from './entity/order.entity';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { UpdateOrderStatusDto } from './dtos/update-order-status.dto';
 
 
 @Controller('order')
+@ApiTags('Order')
 export class OrderController {
 
     constructor(

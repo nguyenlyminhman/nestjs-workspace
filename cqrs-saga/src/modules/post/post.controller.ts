@@ -10,17 +10,19 @@ import {
   Post,
 } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
-import { CreatePostCommand } from './commands/create-post.command';
-import { DeletePostCommand } from './commands/delete-post.command';
-import { UpdatePostCommand } from './commands/update-post.command';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  DeletePostCommand,
+  UpdatePostCommand,
+  CreatePostCommand,
+} from './commands/impl';
 import { CreatePostDto } from './dtos/create-post.dto';
 import { UpdatePostDto } from './dtos/update-post.dto';
 import { PostEntity } from './entity/post.entity';
-import { GetPostQuery } from './queries/get-post.query';
-import { GetPostsQuery } from './queries/get-posts.query';
+import { GetPostsQuery, GetPostQuery } from './queries/impl';
 
 @Controller('post')
+@ApiTags('Post')
 export class PostController {
   constructor(
     private readonly commandBus: CommandBus,

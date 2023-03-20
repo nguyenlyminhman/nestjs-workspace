@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 import { PostRepository } from "../../repository/post.repository";
-import { GetPostQuery } from "../get-post.query";
+import { GetPostQuery } from "../impl";
 
 @QueryHandler(GetPostQuery)
 export class GetPostHandler implements IQueryHandler<GetPostQuery> {

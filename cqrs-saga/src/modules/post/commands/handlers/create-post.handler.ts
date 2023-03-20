@@ -2,7 +2,7 @@ import { HttpException, HttpStatus } from "@nestjs/common";
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { PrismaService } from "src/prisma/prisma.service";
 import { PostRepository } from "../../repository/post.repository";
-import { CreatePostCommand } from "../create-post.command";
+import { CreatePostCommand } from "../impl";
 
 @CommandHandler(CreatePostCommand)
 export class CreatePostHandler implements ICommandHandler<CreatePostCommand>{
