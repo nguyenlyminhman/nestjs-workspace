@@ -48,6 +48,16 @@ export class PostController {
   async update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
     return this.commandBus.execute(new UpdatePostCommand(+id, updatePostDto));
   }
+  
+  @Get('all')
+  @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({
+    description: 'Get posts',
+    type: [PostEntity],
+  })
+  async getAll() {
+    return this.queryBus.execute(new GetPostsQuery());
+  }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
@@ -57,16 +67,6 @@ export class PostController {
   })
   async get(@Param('id') id: string) {
     return this.queryBus.execute(new GetPostQuery(+id));
-  }
-
-  @Get('/all')
-  @HttpCode(HttpStatus.OK)
-  @ApiOkResponse({
-    description: 'Get posts',
-    type: [PostEntity],
-  })
-  async getAll() {
-    return this.queryBus.execute(new GetPostsQuery());
   }
 
   @Delete(':id')
