@@ -7,5 +7,7 @@
         "cqrs-saga"
     ],
     "scripts": {},
-    "dependencies": {}
+    "devDependencies": {
+        "@types/multer": "^1.4.11"
+    }
 }
