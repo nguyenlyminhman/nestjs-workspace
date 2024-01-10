@@ -8,7 +8,7 @@ import config from './config.json'
 
 @Controller('/s3')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) { }
 
   @Get('/test')
   getHello(): string {
@@ -23,7 +23,7 @@ export class AppController {
       secretAccessKey: config.AWS_SECRET_KEY,
       region: config.REGION
     });
-    
+
     const s3 = new AWS.S3();
 
     const key = media.originalname;
@@ -33,21 +33,46 @@ export class AppController {
       Body: media.buffer,
       Key: key
     })
-    .promise()
-    .then(res => {
-      console.log(`Upload succeeded - `, res);
-    })
-    .catch(err => {
-      console.log("Upload failed:", err);
-    });
+      .promise()
+      .then(res => {
+        console.log(`Upload succeeded - `, res);
+      })
+      .catch(err => {
+        console.log("Upload failed:", err);
+      });
 
     return key;
   }
 
   @Post('/upload-client')
   @UseInterceptors(FileInterceptor('media'))
-  uploadS3Client(@UploadedFile() media: Express.Multer.File): string {
-    console.log('file', media);
-    return null;
+  async uploadS3Client(@UploadedFile() media: Express.Multer.File) {
+    const s3 = new S3Client({
+      credentials: {
+        accessKeyId: config.AWS_ACCESS_KEY,
+        secretAccessKey: config.AWS_SECRET_KEY,
+      },
+      region: config.REGION,
+      // signatureVersion: 'v4',
+    });
+
+    const key = media.originalname;
+    const params = {
+      Bucket: process.env.AWS_BUCKET,
+      Key: key,
+    };
+
+    const command = new ListBucketsCommand(params);
+    try {
+      const data = await s3.send(command);
+      console.log(data);
+      
+    } catch (error) {
+      // error handling.
+    } finally {
+      // finally.
+    }
+
+    return key;
   }
 }
