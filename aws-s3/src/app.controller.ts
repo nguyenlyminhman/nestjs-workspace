@@ -2,7 +2,7 @@ import { Controller, Get, Post, UploadedFile, UseInterceptors } from '@nestjs/co
 import { AppService } from './app.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import AWS from 'aws-sdk';
-import { S3Client, ListBucketsCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import config from './config.json'
 
 
@@ -47,7 +47,7 @@ export class AppController {
   @Post('/upload-client')
   @UseInterceptors(FileInterceptor('media'))
   async uploadS3Client(@UploadedFile() media: Express.Multer.File) {
-    const s3 = new S3Client({
+    const s3Client = new S3Client({
       credentials: {
         accessKeyId: config.AWS_ACCESS_KEY,
         secretAccessKey: config.AWS_SECRET_KEY,
@@ -58,19 +58,19 @@ export class AppController {
 
     const key = media.originalname;
     const params = {
-      Bucket: process.env.AWS_BUCKET,
+      Bucket: config.BUCKET,
+      Body: media.buffer,
       Key: key,
     };
-
-    const command = new ListBucketsCommand(params);
+  
+    const command = new PutObjectCommand(params);
+    let data: any = {};
     try {
-      const data = await s3.send(command);
-      console.log(data);
-      
+      data = await s3Client.send(command);
     } catch (error) {
-      // error handling.
+      console.log(error);
     } finally {
-      // finally.
+      console.log(data);
     }
 
     return key;
