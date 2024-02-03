@@ -1,18 +1,35 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
-import { EventsModule } from './events/events.module';
-import { MessagesModule } from './messages/messages.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { EventsModule } from './modules/events/events.module';
+import { MessagesModule } from './modules/messages/messages.module';
 import { APP_GUARD } from '@nestjs/core';
-import { WsJwtGuard } from './auth/ws-jwt/ws-jwt.guard';
+import { WsJwtGuard } from './modules/auth/ws-jwt/ws-jwt.guard';
+import { UsersModule } from './modules/users/users.module';
+import { DatabaseModule } from './database/database.module';
+import { ConfigModule } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
-  imports: [AuthModule, EventsModule, MessagesModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+    }),
+    AuthModule, 
+    EventsModule, 
+    MessagesModule, 
+    UsersModule, 
+    DatabaseModule],
   controllers: [AppController],
-  providers: [AppService, {
-    provide: APP_GUARD,
-    useClass: WsJwtGuard
-  }],
+  providers: [
+    AppService,
+    JwtService
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: WsJwtGuard
+    // }
+  ],
 })
-export class AppModule {}
+export class AppModule { }

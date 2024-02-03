@@ -1,4 +1,4 @@
-import { Message } from "src/messages/entities/message.entity";
+import { Message } from "src/objects/entities/message.entity";
 
 export interface ServerToClients {
     newMessage: (payload: Message) => void;
