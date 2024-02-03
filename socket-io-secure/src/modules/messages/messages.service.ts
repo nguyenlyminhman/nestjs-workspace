@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMessageDto } from './dtos/message.dto';
-import { EventGateway } from 'src/events/event.getway';
-import { Message } from './entities/message.entity';
+import { EventGateway } from 'src/modules/events/event.getway';
+import { Message } from '../../objects/entities/message.entity';
 
 @Injectable()
 export class MessagesService {
