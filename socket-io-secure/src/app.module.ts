@@ -25,11 +25,7 @@ import { JwtService } from '@nestjs/jwt';
   controllers: [AppController],
   providers: [
     AppService,
-    JwtService
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: WsJwtGuard
-    // }
+    JwtService,
   ],
 })
 export class AppModule { }
