@@ -9,9 +9,8 @@ export class WsJwtGuard implements CanActivate {
             return false;
         }
         const client: Socket = context.switchToWs().getClient();
-        const { authorization } = client.handshake.headers;
-        
         WsJwtGuard.validateToken(client);
+
         return true;
     }
 
@@ -19,7 +18,8 @@ export class WsJwtGuard implements CanActivate {
         const { authorization } = client.handshake.headers;
 
         const token:string = authorization.split(' ')[1];
-        const payload = verify(token, 'secretKeys');
+        const payload = verify(token, process.env.JWT_SECRETE);
+
         return payload;
     }
     
