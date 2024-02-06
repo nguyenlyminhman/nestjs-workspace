@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id         Int      @id @default(autoincrement())
+  email      String   @unique
+  name       String?
+  is_deleted Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  created_by String
+  updated_by String
+  // posts      post[]
+  // profile    profile?
+}
+
+model profile {
+  id         Int      @id @default(autoincrement())
+  bio        String
+  userId     Int      @unique
+  is_deleted Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  created_by String
+  updated_by String
+  // user       user     @relation(fields: [userId], references: [id])
+}
+
+model post {
+  id         Int                 @id @default(autoincrement())
+  createdAt  DateTime            @default(now())
+  title      String
+  published  Boolean             @default(false)
+  authorId   Int
+  is_deleted Boolean             @default(false)
+  created_at DateTime            @default(now())
+  updated_at DateTime            @default(now())
+  created_by String
+  updated_by String
+  // categories categories_posts[]
+  // author     user                @relation(fields: [authorId], references: [id])
+}
+
+model category {
+  id         Int                 @id @default(autoincrement())
+  name       String
+  is_deleted Boolean             @default(false)
+  created_at DateTime            @default(now())
+  updated_at DateTime            @default(now())
+  created_by String
+  updated_by String
+  // posts      categories_posts[]
+}
