@@ -14,46 +14,31 @@ model user {
   is_deleted Boolean  @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
-  created_by String
-  updated_by String
-  // posts      post[]
-  // profile    profile?
-}
+  post       post[]
 
-model profile {
-  id         Int      @id @default(autoincrement())
-  bio        String
-  userId     Int      @unique
-  is_deleted Boolean  @default(false)
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-  created_by String
-  updated_by String
-  // user       user     @relation(fields: [userId], references: [id])
+  @@map("user")
 }
 
 model post {
-  id         Int                 @id @default(autoincrement())
-  createdAt  DateTime            @default(now())
-  title      String
-  published  Boolean             @default(false)
-  authorId   Int
-  is_deleted Boolean             @default(false)
-  created_at DateTime            @default(now())
-  updated_at DateTime            @default(now())
-  created_by String
-  updated_by String
-  // categories categories_posts[]
-  // author     user                @relation(fields: [authorId], references: [id])
+  id          Int      @id @default(autoincrement())
+  title       String
+  published   Boolean  @default(false)
+  is_deleted  Boolean  @default(false)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+  author      user     @relation(fields: [author_id], references: [id])
+  author_id   Int
+  categories category[]
+
+  @@map("post")
 }
 
 model category {
-  id         Int                 @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   name       String
-  is_deleted Boolean             @default(false)
-  created_at DateTime            @default(now())
-  updated_at DateTime            @default(now())
-  created_by String
-  updated_by String
-  // posts      categories_posts[]
+  is_deleted Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  post       post[]
+  @@map("category")
 }
