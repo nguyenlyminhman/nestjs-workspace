@@ -1,7 +1,7 @@
-export const API_VERSION = '1';
+export const VERSION_1 = '1';
 
 export enum EApiPath {
-  USERS = 'Users',
-  POST = 'Post',
-  CATEGORY = 'Category',
+  USER = 'user',
+  POST = 'post',
+  CATEGORY = 'category',
 }
