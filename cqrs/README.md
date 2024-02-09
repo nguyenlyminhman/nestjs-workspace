@@ -1,54 +1,39 @@
 # Prisma ORM
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+CQRS (Command Query Responsibility Segregation) is a software architectural pattern that separates the concerns of reading data (queries) from modifying data (commands) in an application. It promotes a clear separation between the models and mechanisms used for reading data and those used for writing data.
+
 
 ## Installation
 
 ```bash
-$ yarn install
+$ npm install
 ```
 ## Database
 
 ```bash
-# development
-$ cd prisma
 
 # init database
-$ yarn prisma migrate dev --name init
+$ npm run db:migrate
 
 # validate schema.prisma
-$ yarn prisma validate
+$ npm run db:validate
 
-# push database
-$ yarn prisma db push
 ```
 
 ## Running the app
 
 ```bash
 # development
-$ yarn run start
+$ npm run start
 
 # watch mode
-$ yarn run start:dev
+$ npm run start:dev
 
 # production mode
-$ yarn run start:prod
+$ npm run start:prod
 ```
 
-## Test
-
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
-```
 
 ## Support
 
@@ -56,9 +41,7 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Author - [Man Nguyen](https://www.linkedin.com/in/ly-minh-man-nguyen-204039147/)
 
 ## License
 
