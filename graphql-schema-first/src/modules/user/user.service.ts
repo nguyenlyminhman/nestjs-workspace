@@ -49,4 +49,20 @@ export class UserService {
 
     return rs;
   }
+
+  async findOneByEmail(email: string): Promise<user> {
+    let rs: user;
+
+    try {
+      rs = await this.prismaService.user.findUnique({
+        where: {
+          email,
+        },
+      });
+    } catch (err) {
+      throw new BadRequestException();
+    }
+
+    return rs;
+  }
 }

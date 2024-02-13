@@ -5,6 +5,7 @@ import { PostModule } from './modules/post/post.module';
 import { CategoryModule } from './modules/category/category.module';
 import { UserModule } from './modules/user/user.module';
 import { DatabaseModule } from './database/database.module';
+import { AuthModule } from './modules/auth/auth.module';
 import DateScalar from './common/date-scalar';
 
 @Module({
@@ -22,6 +23,7 @@ import DateScalar from './common/date-scalar';
         Date: DateScalar,
       },
     }),
+    AuthModule,
   ],
 })
 export class AppModule {}
