@@ -1,3 +1,5 @@
+scalar Date
+
 type Query {
   categories: [Category]
   category(id: ID!): Category
@@ -14,6 +16,8 @@ type Subscription {
 type Category {
   id: Int!
   name: String!
+  created_at: Date!
+  updated_at: Date!
 }
 
 input CreateCategoryInput {

@@ -1,3 +1,5 @@
+scalar Date
+
 type Query {
   users: [User]
   user(id: ID!): User
@@ -16,6 +18,8 @@ type User {
   fullname: String!
   email: String!
   password: String!
+  created_at: Date!
+  updated_at: Date!
 }
 
 input CreateUserInput {

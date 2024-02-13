@@ -58,14 +58,18 @@ export abstract class ISubscription {
 export class Category {
     id: number;
     name: string;
+    created_at: Date;
+    updated_at: Date;
 }
 
 export class Post {
     id: number;
     title: string;
     content: string;
-    user: Nullable<User>[];
-    categories: Nullable<Category>[];
+    user: User[];
+    categories: Category[];
+    created_at: Date;
+    updated_at: Date;
 }
 
 export class User {
@@ -73,6 +77,8 @@ export class User {
     fullname: string;
     email: string;
     password: string;
+    created_at: Date;
+    updated_at: Date;
 }
 
 type Nullable<T> = T | null;

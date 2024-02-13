@@ -1,3 +1,5 @@
+scalar Date
+
 type Query {
   posts: [Post]
   post(id: ID!): Post
@@ -17,6 +19,8 @@ type Post {
   content: String!
   user: [User!]!
   categories: [Category!]!
+  created_at: Date!
+  updated_at: Date!
 }
 
 type User {
@@ -24,11 +28,15 @@ type User {
   fullname: String!
   email: String!
   password: String!
+  created_at: Date!
+  updated_at: Date!
 }
 
 type Category {
   id: Int!
   name: String!
+  created_at: Date!
+  updated_at: Date!
 }
 
 input CreatePostInput {
