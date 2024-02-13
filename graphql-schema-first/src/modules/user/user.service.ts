@@ -1,29 +1,52 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
-import { User } from 'src/graphql.schema';
 import { CreateUserDto } from './dto/create-user.dto';
+import { user } from '@prisma/client';
 
 @Injectable()
 export class UserService {
-  constructor(readonly prismaService: PrismaService) {}
+  constructor(readonly prismaService: PrismaService) { }
 
-  async findAll() {
-    return this.prismaService.user.findMany();
+  async findAll(): Promise<user[]> {
+    let rs: user[];
+
+    try {
+      rs = await this.prismaService.user.findMany();
+    } catch (err) {
+      throw new BadRequestException();
+    }
+
+    return rs;
   }
 
-  async findOneById(id: number) {
-    return this.prismaService.user.findUnique({
-      where: {
-        id,
-      },
-    });
+  async findOneById(id: number): Promise<user> {
+    let rs: user;
+
+    try {
+      rs = await this.prismaService.user.findUnique({
+        where: {
+          id,
+        },
+      });
+    } catch (err) {
+      throw new BadRequestException();
+    }
+
+    return rs;
   }
 
-  async create(user: CreateUserDto): Promise<User> {
-    return this.prismaService.user.create({
-      data: {
-        ...user,
-      },
-    });
+  async create(user: CreateUserDto): Promise<user> {
+    let rs: user;
+    try {
+      rs = await this.prismaService.user.create({
+        data: {
+          ...user,
+        },
+      });
+    } catch (err) {
+      throw new BadRequestException();
+    }
+
+    return rs;
   }
 }

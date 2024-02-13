@@ -1,6 +1,5 @@
 import { IsEmail, IsString } from 'class-validator';
-import { CreateUserInput } from 'src/graphql.schema';
-
+import { CreateUserInput } from 'src/graphql/graphql.schema';
 export class CreateUserDto extends CreateUserInput {
   @IsString()
   fullname: string;

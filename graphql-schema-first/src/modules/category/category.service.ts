@@ -1,29 +1,53 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
-import { Category } from 'src/graphql.schema';
+import { category } from '@prisma/client';
 
 @Injectable()
 export class CategoryService {
   constructor(readonly prismaService: PrismaService) {}
 
-  async findAll(): Promise<Category[]> {
-    return this.prismaService.category.findMany();
+  async findAll(): Promise<category[]> {
+    let rs: category[];
+
+    try {
+      rs = await this.prismaService.category.findMany();
+    } catch (err) {
+      throw new BadRequestException();
+    }
+
+    return rs;
   }
 
-  async findOneById(id: number): Promise<Category> {
-    return this.prismaService.category.findUnique({
-      where: {
-        id,
-      },
-    });
+  async findOneById(id: number): Promise<category> {
+    let rs: category;
+
+    try {
+      rs = await this.prismaService.category.findUnique({
+        where: {
+          id,
+        },
+      });
+    } catch (err) {
+      throw new BadRequestException();
+    }
+
+    return rs;
   }
 
-  async create(category: CreateCategoryDto): Promise<Category> {
-    return this.prismaService.category.create({
-      data: {
-        ...category,
-      },
-    });
+  async create(category: CreateCategoryDto): Promise<category> {
+    let rs: category;
+
+    try {
+      rs = await this.prismaService.category.create({
+        data: {
+          ...category,
+        },
+      });
+    } catch (err) {
+      throw new BadRequestException();
+    }
+
+    return rs;
   }
 }

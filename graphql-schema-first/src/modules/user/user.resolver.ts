@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { ParseIntPipe } from '@nestjs/common';
-import { User } from 'src/graphql.schema';
+import { user } from '@prisma/client';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PubSub } from 'graphql-subscriptions';
 
@@ -20,12 +20,12 @@ export class UserResolver {
   user(
     @Args('id', ParseIntPipe)
     id: number,
-  ): Promise<User> {
+  ): Promise<user> {
     return this.userService.findOneById(id);
   }
 
   @Mutation('createUser')
-  async create(@Args('createUserInput') args: CreateUserDto): Promise<User> {
+  async create(@Args('createUserInput') args: CreateUserDto): Promise<user> {
     const createdUser = await this.userService.create(args);
     pubSub.publish('userCreated', { userCreated: createdUser });
     return createdUser;

@@ -3,7 +3,7 @@ import { CategoryService } from './category.service';
 import { Args, Mutation, Query, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
 import { CreateCategoryDto } from './dto/create-category.dto';
-import { Category } from 'src/graphql.schema';
+import { category } from '@prisma/client';
 
 const pubSub = new PubSub();
 
@@ -12,7 +12,7 @@ export class CategoryResolver {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Query('categories')
-  getAll(): Promise<Category[]> {
+  getAll(): Promise<category[]> {
     return this.categoryService.findAll();
   }
 
@@ -20,14 +20,14 @@ export class CategoryResolver {
   getOneById(
     @Args('id', ParseIntPipe)
     id: number,
-  ): Promise<Category> {
+  ): Promise<category> {
     return this.categoryService.findOneById(id);
   }
 
   @Mutation('createCategory')
   async create(
     @Args('createCategoryInput') args: CreateCategoryDto,
-  ): Promise<Category> {
+  ): Promise<category> {
     const categoryCreated = await this.categoryService.create(args);
     pubSub.publish('categoryCreated', { categoryCreated: categoryCreated });
     return categoryCreated;
