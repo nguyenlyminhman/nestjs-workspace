@@ -9,8 +9,5 @@ export class CreatePostDto extends CreatePostInput {
   content: string;
 
   @IsNumber()
-  author: number;
-
-  @IsNumber()
   category: number;
 }

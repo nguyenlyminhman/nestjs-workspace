@@ -18,6 +18,7 @@ type User {
   fullname: String!
   email: String!
   password: String!
+  permissions: [Permissions]!
   created_at: Date!
   updated_at: Date!
 }
@@ -26,4 +27,13 @@ input CreateUserInput {
   fullname: String
   email: String
   password: String
+  permissions: [String]
+}
+
+enum Permissions {
+  ALL
+  CREATE
+  READ
+  UPDATE
+  DELETE
 }
