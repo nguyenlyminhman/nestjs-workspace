@@ -28,6 +28,7 @@ type User {
   fullname: String!
   email: String!
   password: String!
+  permissions: [Permissions]!
   created_at: Date!
   updated_at: Date!
 }
@@ -44,4 +45,12 @@ input CreatePostInput {
   content: String
   author: Int
   category: Int
+}
+
+enum Permissions {
+  ALL
+  CREATE
+  READ
+  UPDATE
+  DELETE
 }

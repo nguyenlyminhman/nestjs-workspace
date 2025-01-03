@@ -10,6 +10,7 @@ import DateScalar from './common/date-scalar';
 
 @Module({
   imports: [
+    AuthModule,
     PostModule,
     CategoryModule,
     UserModule,
@@ -22,8 +23,16 @@ import DateScalar from './common/date-scalar';
       resolvers: {
         Date: DateScalar,
       },
+      formatError: (error: any) => {
+        const graphQLFormattedError = {
+          message:
+            error.extensions?.exception?.response?.message || error.message,
+          code: error.extensions?.code || 'SERVER_ERROR',
+          name: error.extensions?.exception?.name || error.name,
+        };
+        return graphQLFormattedError;
+      },
     }),
-    AuthModule,
   ],
 })
 export class AppModule {}

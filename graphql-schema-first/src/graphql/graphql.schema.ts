@@ -8,10 +8,24 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export enum Permissions {
+    ALL = "ALL",
+    CREATE = "CREATE",
+    READ = "READ",
+    UPDATE = "UPDATE",
+    DELETE = "DELETE"
+}
+
+export class AuthInput {
+    email?: Nullable<string>;
+    password?: Nullable<string>;
+}
+
 export class CreateUserInput {
     fullname?: Nullable<string>;
     email?: Nullable<string>;
     password?: Nullable<string>;
+    permissions?: Nullable<Nullable<string>[]>;
 }
 
 export class CreateCategoryInput {
@@ -25,12 +39,9 @@ export class CreatePostInput {
     category?: Nullable<number>;
 }
 
-export class AuthInput {
-    email?: Nullable<string>;
-    password?: Nullable<string>;
-}
-
 export abstract class IQuery {
+    abstract auth(authInput?: Nullable<AuthInput>): Nullable<AuthInfo> | Promise<Nullable<AuthInfo>>;
+
     abstract users(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
 
     abstract user(id: string): Nullable<User> | Promise<Nullable<User>>;
@@ -42,8 +53,21 @@ export abstract class IQuery {
     abstract posts(): Nullable<Nullable<Post>[]> | Promise<Nullable<Nullable<Post>[]>>;
 
     abstract post(id: string): Nullable<Post> | Promise<Nullable<Post>>;
+}
 
-    abstract auth(authInput?: Nullable<AuthInput>): Nullable<AuthInfo> | Promise<Nullable<AuthInfo>>;
+export class AuthInfo {
+    token?: Nullable<string>;
+    user: User[];
+}
+
+export class User {
+    id: number;
+    fullname: string;
+    email: string;
+    created_at: Date;
+    updated_at: Date;
+    password: string;
+    permissions: Nullable<Permissions>[];
 }
 
 export abstract class IMutation {
@@ -62,15 +86,6 @@ export abstract class ISubscription {
     abstract postCreated(): Nullable<Post> | Promise<Nullable<Post>>;
 }
 
-export class User {
-    id: number;
-    fullname: string;
-    email: string;
-    password: string;
-    created_at: Date;
-    updated_at: Date;
-}
-
 export class Category {
     id: number;
     name: string;
@@ -86,11 +101,6 @@ export class Post {
     categories: Category[];
     created_at: Date;
     updated_at: Date;
-}
-
-export class AuthInfo {
-    token?: Nullable<string>;
-    user: User[];
 }
 
 type Nullable<T> = T | null;
