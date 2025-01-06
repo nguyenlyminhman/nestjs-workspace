@@ -8,9 +8,8 @@ import { DirectModule } from './modules/direct/direct.module';
 import { HeadersModule } from './modules/headers/headers.module';
 import { ConfigModule } from '@nestjs/config';
 import { AppConfigService } from './shared/app-config.service';
-import { RabbitMqModule } from './rabbitmq/rabbitmq.module';
-import { SeedingRabbitMqService } from './shared/rabbit-config.service';
-import { RmqModule } from './rmq/rmq.module';
+import { RbmqModule } from './rbmq/rbmq.module';
+import { SeedingRabbitMqService } from './shared/seeding-rabbitmq.service';
 
 @Module({
   imports: [
@@ -18,13 +17,12 @@ import { RmqModule } from './rmq/rmq.module';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    RabbitMqModule.registerRmq('drex_queue_01', 'drex_queue_01'),
     SharedModule,
     FanoutModule,
     TopicModule,
     DirectModule,
     HeadersModule,
-    RmqModule,
+    RbmqModule,
   ],
   controllers: [AppController],
   providers: [

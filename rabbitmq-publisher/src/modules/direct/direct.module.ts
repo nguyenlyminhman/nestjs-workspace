@@ -1,19 +1,16 @@
 import { Module } from '@nestjs/common';
 import { DirectController } from './direct.controller';
 import { DirectService } from './direct.service';
-import { RabbitMqService } from 'src/rabbitmq/rabbitmq.service';
-import { RmqModule } from 'src/rmq/rmq.module';
-import { RabbitMqModule } from 'src/rabbitmq/rabbitmq.module';
+import { RbmqModule } from 'src/rbmq/rbmq.module';
+import { EDirect } from 'src/objects/enums/direct.enum';
 
 @Module({
-  imports: [    
-    RmqModule.register({ name: 'drex_queue_02'}),
-    RabbitMqModule.registerRmq('drex_queue_01', 'drex_queue_01'),
+  imports: [
+    RbmqModule.register({ queueName: EDirect.DIRECT_QUEUE }),
   ],
   controllers: [DirectController],
   providers: [
-    DirectService,
-    RabbitMqService
+    DirectService
   ]
 })
-export class DirectModule {}
+export class DirectModule { }
