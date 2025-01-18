@@ -7,10 +7,11 @@ export class RmqService {
     constructor(private readonly configService: ConfigService) {}
 
   getOptions(queue: string): RmqOptions {
+    const RABBIT_URL = this.configService.get<string>('RABBIT_URL');
     return {
       transport: Transport.RMQ,
       options: {
-        urls: [`amqps://iyksiimp:DeUCNk-jKZpW-NFtdn0iUNbHG4o9Wa6d@armadillo.rmq.cloudamqp.com/iyksiimp`],
+        urls: [`${RABBIT_URL}`],
         queue: queue,
         queueOptions: {
           durable: true,
