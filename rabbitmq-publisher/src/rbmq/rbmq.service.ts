@@ -6,11 +6,13 @@ import { RmqContext, RmqOptions, Transport } from '@nestjs/microservices';
 export class RbmqService {
     constructor(private readonly configService: ConfigService) {}
 
+  
     getOptions(queue: string, noAck = false): RmqOptions {
+      const RABBIT_URL = this.configService.get<string>('RABBIT_URL');
       return {
         transport: Transport.RMQ,
         options: {
-          urls: [`amqps://iyksiimp:DeUCNk-jKZpW-NFtdn0iUNbHG4o9Wa6d@armadillo.rmq.cloudamqp.com/iyksiimp`],
+          urls: [`${RABBIT_URL}`],
           queue: queue,
           noAck,
           persistent: true,
