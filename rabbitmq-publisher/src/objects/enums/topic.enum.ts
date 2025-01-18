@@ -5,5 +5,6 @@ export enum ETopic {
 }
 
 export enum ETopicPattern {
-    TOPIC_PATTERN_01 = 'tpex_ptn_01',
+    USER_EMAIL = 'user.register.email',
+    USER_ORDER = 'user.order.success',
 }
